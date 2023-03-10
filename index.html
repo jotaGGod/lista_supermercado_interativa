@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Supermercado</title>
+    <script src="/appListaSupermercado/listaSupermercado.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500&family=Gidugu&family=Gothic+A1:wght@100;200&family=Gowun+Batang&family=Gowun+Dodum&family=Noto+Sans:wght@400;700&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Gowun Batang', serif;
+        }
+
+        header{
+            background-color: #5a71bb;
+            text-align: center;
+            color: antiquewhite;
+            padding: 30px 0px;
+            margin-bottom: 15px;
+        }
+
+        .listaCadastro{
+            display: flex;
+            margin: 20px 0px;
+            padding: 20px;
+            gap: 5px;  
+        }
+
+        .listaCadastro
+        input[type=text]{
+            flex: 1;
+            height: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: antiquewhite;
+            box-shadow: 0px 0px 10px gray;
+            outline: none;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .listaCadastro
+        input[type=text]:focus{
+            flex: 1;
+            height: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: antiquewhite;
+            box-shadow: 0px 0px 15px gray;
+            outline: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .listaCadastro
+        input[type=number]{
+            flex: 1;
+            height: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: antiquewhite;
+            box-shadow: 0px 0px 10px gray;
+            outline: none;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .listaCadastro
+        input[type=number]:focus{
+            flex: 1;
+            height: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: antiquewhite;
+            box-shadow: 0px 0px 15px gray;
+            outline: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .listaCadastro
+        input[type=submit]{
+            margin-left: 8px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: #5973cc;
+            color: antiquewhite;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .listaCadastro
+        input[type=submit]:hover{
+            margin-left: 8px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: #6a8cff;
+            color: antiquewhite;
+            text-shadow: 0px 0px 4px antiquewhitee;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0px 0px 8px gray;
+            transition: 0.2s;
+        }
+
+        .listaProdutos{
+            margin: 20px;
+            padding: 10px;
+            background-color: antiquewhite;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray; 
+        }
+
+        .listaProdutosSingle{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 10px;
+            border-bottom: 1px solid rgba(170, 169, 169, 0.5);
+            
+        }
+
+        .somaProdutos{
+            margin: 20px;
+            padding: 10px;
+            background-color: antiquewhite;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        .somaProdutosSigle{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Lista de Supermercado</h2>
+    </header>
+
+    <div class="listaCadastro">
+
+        <input type="text" placeholder="Nome do produto" name="nome_do_produto" class="inputName" required>
+        <input type="number" placeholder="Valor do produto" name="valor_do_produto" class="inputValor" required>
+        <input type="submit" name="acao">
+
+    </div>
+
+   <div class="listaProdutos">
+
+    <!--Está no script-->
+    <!--    <div class="listaProdutosSingle">       
+            <p><b>RedBull</b></p>
+            <p><b>R$20,00</b></p>
+        </div>  -->                              
+
+    </div> 
+
+    <div class="somaProdutos">
+
+        <div class="somaProdutosSigle">
+            <h3><i>TOTAL</i></h3>
+            <h3 id="totalNumber"><i>R$0,00</i></h3>
+        </div>
+
+    </div>
+    
+</body>
+<script>
+
+    var items = [];
+
+    document.querySelector("input[type=submit]")
+    .addEventListener("click", ()=>{
+        var nomeProduto = document.querySelector("input[type=text]");
+        var valorProduto = document.querySelector("input[type=number]");
+
+        items.push({            
+            nome: nomeProduto.value,
+            valor: valorProduto.value,
+        });
+
+        let productList = document.querySelector(".listaProdutos");
+        productList.innerHTML = "";
+
+        let soma = 0;
+
+    
+        items.map(function(val){ 
+            soma += parseFloat(val.valor);           
+            productList.innerHTML+=`
+            
+                <div class="listaProdutosSingle">
+                    <p><b>`+val.nome+`</b></p>
+                    <p><b>`+val.valor+`</b></p>
+                </div>          
+            
+            `;
+        });
+
+        nomeProduto.value = "";
+        valorProduto.value = "";
+        soma = soma.toFixed(2);
+
+        let elementoSoma = document.getElementById("totalNumber");
+
+        elementoSoma.innerHTML = "R$" + soma;
+
+    });
+
+</script>
+</html>
